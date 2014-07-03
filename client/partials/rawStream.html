@@ -1,4 +1,5 @@
+<h2>Raw Stream from Soundcloud</h2>
 <input type="button" value="get reposts" ng-click="getReposts()"></input>
 <ul>
-  <li ng-repeat="(key, value) in user">{{key}}: {{value}}</li>
+  <li ng-repeat="song in reposts"><p>{{song.title}}</p><input type="button" value="add" ng-click="addToPlaylist(song)"></input></li>
 </ul>

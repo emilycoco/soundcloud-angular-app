@@ -7,23 +7,23 @@ angular.module('app.router', ['ui.router'])
         views: {
           '' : {
             templateUrl: './partials/main.html',
-            controller: 'main.controller'
+            controller: 'MainController'
           },
           'rawstream@main' : {
             templateUrl: './partials/rawstream.html',
-            controller: 'rawstream.controller'
+            controller: 'RawstreamController'
           },
           'player@main' : {
             templateUrl: './partials/player.html',
-            controller: 'player.controller'
+            controller: 'PlayerController'
           },
           'playlist@main' : {
             templateUrl: './partials/playlist.html',
-            controller: 'playlist.controller'
+            controller: 'PlaylistController'
           },
           'search@main' : {
             templateUrl: './partials/search.html',
-            controller: 'search.controller'
+            controller: 'SearchController'
           }
         }
       });

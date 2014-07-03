@@ -1,1 +1,6 @@
-<div class="playlist-container">playlist</div>
+<div class="playlist-container">
+<h2>Playlist</h2>
+<ul>
+  <li ng-repeat="song in playlist"><p>{{song.title}}</p><input type="button" value="X" ng-click="removeFromPlaylist(song)"></input></li>
+</ul>
+</div>

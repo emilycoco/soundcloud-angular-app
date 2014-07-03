@@ -1,36 +1,37 @@
 var controllers = angular.module('app.controllers', []);
 
-controllers.controller('main.controller', ['$scope', 'initialize', function($scope, initialize) {
+controllers.controller('MainController', ['$scope', function($scope) {
 
-  $scope.authenticate = function() {
-    initialize.auth(function() {
-      console.log('authentication successful');
-    });
-  };
 }]);
 
 
-controllers.controller('rawstream.controller', ['$scope', 'initialize','streamFactory', function($scope, initialize, streamFactory) {
+controllers.controller('RawstreamController', ['$scope', 'initialize','streamFactory', 'playlist', function($scope, initialize, streamFactory, playlist) {
 
   $scope.getReposts = function() {
     initialize.auth(function(){
-      streamFactory.getStream('39778833', function(data){
-          $scope.user = _.map(data, function(song) {
-            return song.track.title;
+      streamFactory.getStream(function(data){
+          $scope.reposts = _.map(data, function(song) {
+            return song.track;
           });
         });
     });
   };
-}]);
 
-controllers.controller('player.controller', [function() {
-
-}]);
-
-controllers.controller('playlist.controller', [function() {
+  $scope.playlist = playlist.playlist;
+  $scope.addToPlaylist = playlist.addToPlaylist;
 
 }]);
 
-controllers.controller('search.controller', [function() {
+controllers.controller('PlayerController', ['$scope', 'playlist', function($scope, playlist) {
+  $scope.currentSong = playlist.currentSong;
+}]);
+
+controllers.controller('PlaylistController', ['$scope', 'playlist', function($scope, playlist) {
+  $scope.playlist = playlist.playlist;
+  $scope.currentIndex = playlist.currentIndex;
+  $scope.removeFromPlaylist = playlist.removeFromPlaylist;
+}]);
+
+controllers.controller('SearchController', [function() {
 
 }]);
