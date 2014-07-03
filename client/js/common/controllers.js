@@ -18,20 +18,41 @@ controllers.controller('RawstreamController', ['$scope', 'initialize','streamFac
   };
 
   $scope.playlist = playlist.playlist;
-  $scope.addToPlaylist = playlist.addToPlaylist;
+  $scope.addToPlaylist = function(song) {
+    playlist.addToPlaylist(song);
+    playlist.setCurrentSong(song);
+  };
 
 }]);
 
 controllers.controller('PlayerController', ['$scope', 'playlist', function($scope, playlist) {
   $scope.currentSong = playlist.currentSong;
+
+  $scope.$watch(function() {
+    return playlist.currentSong;
+  }, function() {
+    $scope.currentSong = playlist.currentSong;
+  });
+
 }]);
 
 controllers.controller('PlaylistController', ['$scope', 'playlist', function($scope, playlist) {
   $scope.playlist = playlist.playlist;
-  $scope.currentIndex = playlist.currentIndex;
   $scope.removeFromPlaylist = playlist.removeFromPlaylist;
 }]);
 
-controllers.controller('SearchController', [function() {
+controllers.controller('SearchController', ['$scope', 'initialize', 'searchFactory', 'playlist', function($scope, initialize, searchFactory, playlist) {
+  $scope.search = function(query) {
+    initialize.auth(function() {
+      searchFactory.getSearch(query, function(data) {
+        $scope.searchResults = data;
+      });
+    });
+  };
 
+  $scope.playlist = playlist.playlist;
+  $scope.addToPlaylist = function(song) {
+    playlist.addToPlaylist(song);
+    playlist.setCurrentSong(song);
+  };
 }]);

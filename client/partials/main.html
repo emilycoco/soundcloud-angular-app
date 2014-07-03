@@ -1,12 +1,13 @@
 <div class="main-container">
-  <h2>Main Page</h2>
-
+  <header>
+    <h2>Main Page</h2>
+    <div ui-view="player"></div>
+  </header>
   <div class="column">
   <div ui-view="rawstream"></div>
   </div>
 
   <div class="column">
-  <div ui-view="player"></div>
   <div ui-view="playlist"></div>
   </div>
 

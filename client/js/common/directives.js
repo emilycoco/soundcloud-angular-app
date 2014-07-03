@@ -5,27 +5,20 @@ directives.directive('soundcloudPlayer', function() {
     restrict: 'E',
     template: '<div>{{trackUrl}}</div>',
     replace: true,
+    transclude: true,
     scope: {
-      trackUrl: '=',
+      trackUrl: '@',
       height: '@'
     },
-    controller: ['$scope', function($scope) {
-      $scope.getOembed = function(song, height, element) {
-        SC.oEmbed(song, {maxheight: height}, function(oEmbed) {
-          element.replaceWith(oEmbed.html);
-        });
-      };
-    }],
     link: function(scope, elem, attrs) {
-
-
-      var fetchOembed = function() {
-        scope.getOembed(scope.trackUrl, attrs.height, elem);
-        console.log(scope.trackUrl);
-      };
-      fetchOembed();
+      scope.$watch(function() {
+        return scope.trackUrl;
+      }, function() {
+        SC.oEmbed(scope.trackUrl, {maxheight: attrs.height}, function(oEmbed) {
+          elem.html(oEmbed.html);
+        });
+      });
     }
   };
 });
-
 

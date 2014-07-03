@@ -1,3 +1,8 @@
 <div class="search-container">
   <h2>Search</h2>
+  <input type="text" ng-model="query"></input>
+  <input type="submit" ng-click="search(query)"></input>
+  <ul>
+  <li ng-repeat="song in searchResults"><p>{{song.title}}</p><input type="button" value="add" ng-click="addToPlaylist(song)"></input></li>
+</ul>
 </div>

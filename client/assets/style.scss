@@ -75,11 +75,11 @@ input {
 }
 
 .player-container {
-  width: 100%;
+  width: 30%%;
+  margin: 0 auto;
   height: 150px;
   background: $app-emphasis;
   border: 2px solid $light-gray;
   @include box-shadow;
 }
-
 

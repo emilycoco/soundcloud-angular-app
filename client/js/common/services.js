@@ -15,6 +15,21 @@ services.factory('streamFactory', ['$q', function($q) {
   };
 }]);
 
+services.factory('searchFactory', ['$q', function($q) {
+  return {
+    getSearch : function(query, func) {
+      var deferred = $q.defer();
+      SC.get('/tracks', {q: query}, function(data) {
+        deferred.resolve(data);
+      });
+
+      return deferred.promise.then(function(data){
+        func(data);
+      });
+    }
+  };
+}]);
+
 
 services.factory('initialize', [ '$q', function($q) {
   return {
@@ -50,7 +65,7 @@ services.factory('initialize', [ '$q', function($q) {
 services.service('playlist', function() {
   this.playlist = {};
   this.currentIndex = 0;
-  this.currentSong = this.playlist[this.currentIndex] || {permalink_url: "http://soundcloud.com/coldmagnet/capital-cities-safe-and-sound-cold-magnet-remix"};
+  this.currentSong = this.currentSong || {permalink_url: "http://soundcloud.com/coldmagnet/capital-cities-safe-and-sound-cold-magnet-remix"};
 
   this.addToPlaylist = function(song) {
     this.playlist[song.id] = song;
@@ -58,6 +73,10 @@ services.service('playlist', function() {
 
   this.removeFromPlaylist = function(song) {
     delete this.playlist[song.id];
+  };
+
+  this.setCurrentSong = function(song) {
+    this.currentSong = song;
   };
 });
 

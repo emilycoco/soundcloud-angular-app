@@ -45,7 +45,8 @@ input {
   position: relative; }
 
 .player-container {
-  width: 100%;
+  width: 30%%;
+  margin: 0 auto;
   height: 150px;
   background: #fb7b54;
   border: 2px solid #ededed;
