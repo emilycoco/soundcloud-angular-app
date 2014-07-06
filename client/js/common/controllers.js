@@ -20,12 +20,13 @@ controllers.controller('RawstreamController', ['$scope', 'initialize','streamFac
   $scope.playlist = playlist.playlist;
   $scope.addToPlaylist = function(song) {
     playlist.addToPlaylist(song);
-    playlist.setCurrentSong(song);
+    playlist.currentSong = song;
+    console.log(playlist.currentSong);
   };
 
 }]);
 
-controllers.controller('PlayerController', ['$scope', 'playlist', function($scope, playlist) {
+controllers.controller('PlayerController', ['$scope', '$sce', 'playlist', 'player', function($scope, $sce, playlist, player) {
   $scope.currentSong = playlist.currentSong;
 
   $scope.$watch(function() {
@@ -33,6 +34,23 @@ controllers.controller('PlayerController', ['$scope', 'playlist', function($scop
   }, function() {
     $scope.currentSong = playlist.currentSong;
   });
+
+  $scope.getIframeUrl = function(songId) {
+    return $sce.trustAsResourceUrl("http://w.soundcloud.com/player/?url=http://api.soundcloud.com/tracks/" + songId);
+  };
+
+
+  $scope.playNextSong = function() {
+    console.log('called');
+    SC.whenStreamingReady(function() {
+      var widget = SC.Widget(document.querySelector('iframe').id);
+      widget.bind(SC.Widget.Events.PLAY, function(player) {
+        $scope.$apply(playlist.currentSong = {id: 157169081});
+        console.log('play');
+      });
+    });
+  };
+  $scope.playNextSong();
 
 }]);
 

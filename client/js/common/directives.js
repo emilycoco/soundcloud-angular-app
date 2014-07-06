@@ -16,6 +16,7 @@ directives.directive('soundcloudPlayer', function() {
       }, function() {
         SC.oEmbed(scope.trackUrl, {maxheight: attrs.height}, function(oEmbed) {
           elem.html(oEmbed.html);
+          console.log(oEmbed);
         });
       });
     }

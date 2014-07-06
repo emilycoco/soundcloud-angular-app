@@ -65,10 +65,11 @@ services.factory('initialize', [ '$q', function($q) {
 services.service('playlist', function() {
   this.playlist = {};
   this.currentIndex = 0;
-  this.currentSong = this.currentSong || {permalink_url: "http://soundcloud.com/coldmagnet/capital-cities-safe-and-sound-cold-magnet-remix"};
+  this.currentSong = this.currentSong || {id: 155809266};
 
   this.addToPlaylist = function(song) {
     this.playlist[song.id] = song;
+    this.currentSong = song;
   };
 
   this.removeFromPlaylist = function(song) {
@@ -78,5 +79,27 @@ services.service('playlist', function() {
   this.setCurrentSong = function(song) {
     this.currentSong = song;
   };
+
+  this.playNextSong = function() {
+    var that = this;
+    SC.whenStreamingReady(function() {
+      widget = SC.Widget(document.querySelector('iframe'));
+      widget.bind(SC.Widget.Events.FINISH, function(player) {
+        that.setCurrentSong({permalink_url: "http://soundcloud.com/cleanbandit/come-over-feat-stylo-g"});
+        console.log(that);
+      });
+    });
+  };
 });
+
+services.service('player',['playlist', function(playlist) {
+  this.playNextSong = function() {
+    SC.whenStreamingReady(function() {
+      widget = SC.Widget(document.querySelector('iframe'));
+      widget.bind(SC.Widget.Events.FINISH, function(player) {
+
+      });
+    });
+  };
+}]);
 
